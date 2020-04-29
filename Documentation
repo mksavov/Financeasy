@@ -1,0 +1,5 @@
+Financeasy is a Java-based program which takes your monthly budget and calculates based on your financial necessities how to spend your money. 
+There's an area with stores with different products, you can find the cheapest store, the closest one and you can search for a specific product and where it's cheapest. 
+Then it calculates depending on your needs the most optimal store you can shop at.
+The source code mainly uses a hierarchy of classes with "Products" being the parent abstract class.
+The method for calculating the money-spend-ratio is in "Budget".
