@@ -5,6 +5,7 @@ public class Meat extends Product {
         super(name, price, weight, expired);
         this.type = type;
     }
+
     public String toString() {
         return super.toString() + ", type of meat: " + type;
     }

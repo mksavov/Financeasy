@@ -2,12 +2,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Financeasy {
-    public static  void main (String[] args) {
+    public static void main(String[] args) {
         ArrayList<Product> asd = new ArrayList<Product>();
         Dairy milk = new Dairy("Olympus", 4, 3, false, 1.7f);
         Dairy cheese = new Dairy("Lacrima", 3.5, 0.4, false, 4);
         Drinks coke = new Drinks("Coca-Cola", 3.20, 2, false, true, false);
-        Drinks beer = new Drinks("Pirinsko", 1.19, 0.5, false,true,true);
+        Drinks beer = new Drinks("Pirinsko", 1.19, 0.5, false, true, true);
 
         asd.add(milk);
         asd.add(cheese);
@@ -19,28 +19,28 @@ public class Financeasy {
         ArrayList<Product> asd1 = new ArrayList<Product>();
         Dairy yellowcheese = new Dairy("Madjarov", 2.6, 0.3, false, 6);
         Meat chicken = new Meat("Gradus", 10, 1, false, "Chicken");
-        Product pp3 = new Product("name22", 21, 67, false);
-        Product pp4 = new Product("name23", 84, 35, false);
+        Wheat bread = new Wheat("burgas", 21, 67, false, true);
+        Drinks beer1 = new Drinks("kamenitza", 84, 35, false, true, true);
 
-        asd1.add(pp1);
-        asd1.add(pp2);
-        asd1.add(pp3);
-        asd1.add(pp4);
+        asd1.add(yellowcheese);
+        asd1.add(chicken);
+        asd1.add(bread);
+        asd1.add(beer1);
 
-        Store s2 = new Store("lidl", asd1,200);
+        Store s2 = new Store("lidl", asd1, 200);
 
         ArrayList<Product> asd2 = new ArrayList<Product>();
-        Product ppp1 = new Product("name32", 76, 31, true);
-        Product ppp2 = new Product("name321", 34, 4, true);
-        Product ppp3 = new Product("name322", 23, 67, false);
-        Product ppp4 = new Product("name323", 65, 35, false);
+        Meat beef = new Meat("gradus", 76, 31, true, "Beef");
+        Meat pork = new Meat("gradus", 34, 4, true, "Pork");
+        Drinks water = new Drinks("devin", 23, 67, false, false, false);
+        Dairy cottage = new Dairy("olympus", 65, 35, false, 3);
 
-        asd2.add(ppp1);
-        asd2.add(ppp2);
-        asd2.add(ppp3);
-        asd2.add(ppp4);
+        asd2.add(beef);
+        asd2.add(pork);
+        asd2.add(water);
+        asd2.add(cottage);
 
-        Store s3 = new Store("billa", asd2,100);
+        Store s3 = new Store("billa", asd2, 100);
 
         ArrayList<Store> st = new ArrayList<Store>();
         st.add(s1);
@@ -51,15 +51,12 @@ public class Financeasy {
         Scanner myObj = new Scanner(System.in);
         String input;
 
-            System.out.println("Enter your budget: ");
-            input = myObj.nextLine();
-            Budget b = new Budget(Integer.parseInt(input));
-            b.Calculate();
-            a1.CheapestStore();
-
-
-
-
-
+        System.out.println("Enter your budget: ");
+        input = myObj.nextLine();
+        Budget b = new Budget(Integer.parseInt(input));
+        b.Calculate();
+        a1.CheapestStore();
+        a1.NearestStore();
+        a1.CheapestProduct();
     }
 }

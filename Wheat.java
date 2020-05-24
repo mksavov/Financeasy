@@ -5,6 +5,7 @@ public class Wheat extends Product {
         super(name, price, weight, expired);
         this.isWholegrain = isWholegrain;
     }
+
     public String toString() {
         return super.toString() + ", whole grain: " + isWholegrain;
     }

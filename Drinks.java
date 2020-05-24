@@ -7,6 +7,7 @@ public class Drinks extends Product {
         this.isCarbonated = isCarbonated;
         this.isAlcoholic = isAlcoholic;
     }
+
     public String toString() {
         return super.toString() + ", carbonated: " + isCarbonated + ", alcoholic: " + isAlcoholic;
     }
