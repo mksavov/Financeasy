@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Area {
+public class Area implements storeFunctions{
+
     ArrayList<Store> stores;
 
     Area(ArrayList<Store> stores) {
@@ -9,107 +10,105 @@ public class Area {
     }
 
 
-    void AddStore(Store s1) {
-        stores.add(s1);
+    void AddStore(Store store) {
+        stores.add(store);
     }
 
     public String toString() {
         return "All stores in the area: " + stores;
     }
 
-    void RemoveStore(Store s1) {
-        stores.remove(s1);
+    void RemoveStore(Store store) {
+        stores.remove(store);
     }
 
     void RemoveAllStores() {
         stores.clear();
     }
 
-    void CheapestStore() {
-        int size = stores.size();
-        int cnt = 0;
-        double sum1 = stores.get(0).SumAllProducts();
-        double sum2;
-        for (int i = 0; i < size; i++) {
-            for (int j = 1; j < size; j++) {
-                sum2 = stores.get(j).SumAllProducts();
-                if (sum1 > sum2) {
-                    cnt = j;
-                    sum1 = stores.get(i).SumAllProducts();
+    public void CheapestStore() {
+        int StoresSize = stores.size();
+        int CheapestStoreIndex = 0;
+        double AveragePricesFirstStore = stores.get(0).averagePrice();
+        double AveragePricesSecondStore;
+        for (int i = 0; i < StoresSize; i++) {
+            AveragePricesSecondStore = stores.get(i).averagePrice();
+            if (AveragePricesFirstStore > AveragePricesSecondStore) {
+                CheapestStoreIndex = i;
+            }
+        }
+        System.out.println("The cheapest store is:" + stores.get(CheapestStoreIndex).toString());
+    }
+
+    public void NearestStore() {
+        int StoresSize = stores.size();
+        int FirstNearestStoreIndex = 1;
+        int SecondNearestStoreIndex = 1;
+        int FirstStoreDistance = stores.get(FirstNearestStoreIndex).getDistance();
+        int SecondStoreDistance = stores.get(SecondNearestStoreIndex).getDistance();
+        for (SecondNearestStoreIndex = 0; SecondNearestStoreIndex < StoresSize; SecondNearestStoreIndex++) {
+            if (FirstStoreDistance > SecondStoreDistance) {
+                FirstNearestStoreIndex = SecondNearestStoreIndex;
+            }
+        }
+        System.out.println("The nearest store is: " + stores.get(FirstNearestStoreIndex).toString());
+    }
+
+    public int findCheapestProductIndex(String productName) {
+        int StoresSize = stores.size();
+        double FirstStoreProductsPrice;
+        double SecondStoreProductsPrice;
+        int i = 0;
+        int j;
+        int ProductsPriceIndex = 0;
+        int StoresIndex = 0;
+        int ProductsSize = stores.get(i).getProducts().size();
+        for (i = 0; i < StoresSize; i++) {
+            for (j = 0; j < ProductsSize; j++) {
+                if (stores.get(i).getProducts().get(j).getLabel().equals(productName) && stores.get(StoresIndex).getProducts().get(ProductsPriceIndex).getLabel().equals(productName)) {
+                    FirstStoreProductsPrice = stores.get(i).getProducts().get(j).getPrice();
+                    SecondStoreProductsPrice = stores.get(StoresIndex).getProducts().get(ProductsPriceIndex).getPrice();
+                    if (FirstStoreProductsPrice < SecondStoreProductsPrice) {
+                        StoresIndex = i;
+                        ProductsPriceIndex = j;
+                    }
                 }
             }
         }
-        System.out.println("The cheapest store is:" + stores.get(cnt).toString());
+        return StoresIndex;
     }
 
-    void NearestStore() {
-        int size = stores.size();
-        int temp = 0;
-        for (int i = 0; i < size; i++) {
-            if (stores.get(temp).distance > stores.get(i).distance) {
-                temp = i;
-            }
-        }
-        System.out.println("The nearest store is: " + stores.get(temp).toString());
-    }
+    public void CheapestProduct() {
+        int selection = 0;
+        int storeIndex = 0;
+        String CheapestProduct = "";
 
-    void CheapestProduct() {
-        int size = stores.size();
-        int selection;
-        String product = "";
-        int cnt = 0;
-        int cnt1 = 0;
-        Dairy d1;
         Scanner myObj = new Scanner(System.in);
         String input;
+
         do {
-            System.out.println("Choose which product you want to check, type '0' to exit: 1 - dairy, 2 - drinks, 3 - meat, 4 - wheat");
+            System.out.println("Choose which product you want to check, type '0' to exit: 1 - dairy, 2 - drink, 3 - meat, 4 - wheat");
             input = myObj.nextLine();
-            selection = Integer.parseInt(input);
-            if (selection == 1) {
-                product = "dairy";
-                for (int i = 0; i < size; i++) {
-                    for (int j = 0; j < stores.get(i).products.size(); j++) {
-                        if (stores.get(i).products.get(j) instanceof Dairy && stores.get(i).products.get(j).price < stores.get(cnt1).products.get(cnt).price) {
-                            cnt = j;
-                            cnt1 = i;
-                        }
-                    }
+            if (Financeasy.TryParseInt(input)) {
+                selection = Integer.parseInt(input);
+                if (selection == 1) {
+                    CheapestProduct = "dairy";
+                    storeIndex = findCheapestProductIndex(CheapestProduct);
+                } else if (selection == 2) {
+                    CheapestProduct = "drink";
+                    storeIndex = findCheapestProductIndex(CheapestProduct);
+                } else if (selection == 3) {
+                    CheapestProduct = "meat";
+                    storeIndex = findCheapestProductIndex(CheapestProduct);
+                } else if (selection == 4) {
+                    CheapestProduct = "wheat";
+                    storeIndex = findCheapestProductIndex(CheapestProduct);
                 }
-            } else if (selection == 2) {
-                product = "drink";
-                for (int i = 0; i < size; i++) {
-                    for (int j = 0; j < stores.get(i).products.size(); j++) {
-                        if (stores.get(i).products.get(j) instanceof Drinks && stores.get(i).products.get(j).price < stores.get(cnt1).products.get(cnt).price) {
-                            cnt = j;
-                            cnt1 = i;
-                        }
-                    }
+                else {
+                    System.out.println("Invalid input");
                 }
-            } else if (selection == 3) {
-                product = "meat";
-                for (int i = 0; i < size; i++) {
-                    for (int j = 0; j < stores.get(i).products.size(); j++) {
-                        if (stores.get(i).products.get(j) instanceof Meat && stores.get(i).products.get(j).price < stores.get(cnt1).products.get(cnt).price) {
-                            cnt = j;
-                            cnt1 = i;
-                        }
-                    }
-                }
-            } else if (selection == 4) {
-                product = "wheat";
-                for (int i = 0; i < size; i++) {
-                    for (int j = 0; j < stores.get(i).products.size(); j++) {
-                        if (stores.get(i).products.get(j) instanceof Wheat && stores.get(i).products.get(j).price < stores.get(cnt1).products.get(cnt).price) {
-                            cnt = j;
-                            cnt1 = i;
-                        }
-                    }
-                }
-            } else {
-                System.out.println("Invalid input");
+                System.out.println("The cheapest " + CheapestProduct + " can be found in: " + stores.get(storeIndex).toString());
             }
-            System.out.println("The cheapest " + product + " can be found in: " + stores.get(cnt1).toString());
-        } while(selection != 0);
+        } while (selection != 0);
     }
 }

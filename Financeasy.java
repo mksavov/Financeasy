@@ -2,61 +2,80 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Financeasy {
+    public static boolean TryParseInt(String value) {
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
     public static void main(String[] args) {
-        ArrayList<Product> asd = new ArrayList<Product>();
-        Dairy milk = new Dairy("Olympus", 4, 3, false, 1.7f);
-        Dairy cheese = new Dairy("Lacrima", 3.5, 0.4, false, 4);
-        Drinks coke = new Drinks("Coca-Cola", 3.20, 2, false, true, false);
-        Drinks beer = new Drinks("Pirinsko", 1.19, 0.5, false, true, true);
 
-        asd.add(milk);
-        asd.add(cheese);
-        asd.add(coke);
-        asd.add(beer);
+        ArrayList<Product> FantastikoProducts = new ArrayList<>();
+        Dairy OlympusMilk = new Dairy("Olympus", 4, 3, false, 1.7f);
+        Dairy LacrimaCheese = new Dairy("Lacrima", 10, 0.4, false, 4);
+        Drinks CocaCola = new Drinks("Coca-Cola", 3.20, 2, false, true, false);
+        Drinks Pirinsko = new Drinks("Pirinsko", 1.19, 0.5, false, true, true);
 
-        Store s1 = new Store("Fantastiko", asd, 400);
+        FantastikoProducts.add(OlympusMilk);
+        FantastikoProducts.add(LacrimaCheese);
+        FantastikoProducts.add(CocaCola);
+        FantastikoProducts.add(Pirinsko);
 
-        ArrayList<Product> asd1 = new ArrayList<Product>();
-        Dairy yellowcheese = new Dairy("Madjarov", 2.6, 0.3, false, 6);
-        Meat chicken = new Meat("Gradus", 10, 1, false, "Chicken");
-        Wheat bread = new Wheat("burgas", 21, 67, false, true);
-        Drinks beer1 = new Drinks("kamenitza", 84, 35, false, true, true);
+        Store Fantastiko = new Store("Fantastiko", FantastikoProducts, 400);
 
-        asd1.add(yellowcheese);
-        asd1.add(chicken);
-        asd1.add(bread);
-        asd1.add(beer1);
+        ArrayList<Product> LidlProducts = new ArrayList<Product>();
+        Dairy YellowCheeseMadjarov = new Dairy("Madjarov", 2.6, 0.3, false, 6);
+        Meat ChickenGradus = new Meat("Gradus", 10, 1, false, "Chicken");
+        Wheat BreadBurgas = new Wheat("burgas", 21, 67, false, true);
+        Drinks BeerKamenitza = new Drinks("kamenitza", 84, 35, false, true, true);
 
-        Store s2 = new Store("lidl", asd1, 200);
+        LidlProducts.add(YellowCheeseMadjarov);
+        LidlProducts.add(ChickenGradus);
+        LidlProducts.add(BreadBurgas);
+        LidlProducts.add(BeerKamenitza);
 
-        ArrayList<Product> asd2 = new ArrayList<Product>();
-        Meat beef = new Meat("gradus", 76, 31, true, "Beef");
-        Meat pork = new Meat("gradus", 34, 4, true, "Pork");
-        Drinks water = new Drinks("devin", 23, 67, false, false, false);
-        Dairy cottage = new Dairy("olympus", 65, 35, false, 3);
+        Store Lidl = new Store("lidl", LidlProducts, 200);
 
-        asd2.add(beef);
-        asd2.add(pork);
-        asd2.add(water);
-        asd2.add(cottage);
+        ArrayList<Product> BillaProducts = new ArrayList<>();
+        Meat BeefGradus = new Meat("gradus", 76, 31, true, "Beef");
+        Meat PorkGradus = new Meat("gradus", 34, 4, true, "Pork");
+        Drinks WaterDevin = new Drinks("devin", 23, 67, false, false, false);
+        Dairy CottageCheeseOlympus = new Dairy("olympus", 65, 35, false, 3);
 
-        Store s3 = new Store("billa", asd2, 100);
+        BillaProducts.add(BeefGradus);
+        BillaProducts.add(PorkGradus);
+        BillaProducts.add(WaterDevin);
+        BillaProducts.add(CottageCheeseOlympus);
 
-        ArrayList<Store> st = new ArrayList<Store>();
-        st.add(s1);
-        st.add(s2);
-        st.add(s3);
-        Area a1 = new Area(st);
+        Store Billa = new Store("billa", BillaProducts, 100);
+
+        ArrayList<Store> LocalStores = new ArrayList<>();
+        LocalStores.add(Fantastiko);
+        LocalStores.add(Lidl);
+        LocalStores.add(Billa);
+        Area Centre = new Area(LocalStores);
 
         Scanner myObj = new Scanner(System.in);
         String input;
+        int budget;
 
-        System.out.println("Enter your budget: ");
-        input = myObj.nextLine();
-        Budget b = new Budget(Integer.parseInt(input));
-        b.Calculate();
-        a1.CheapestStore();
-        a1.NearestStore();
-        a1.CheapestProduct();
+        while (true) {
+            System.out.println("Enter your budget: ");
+            input = myObj.nextLine();
+            if (TryParseInt(input)) {
+                budget = Integer.parseInt(input);
+                Budget MonthlyBudget = new Budget(budget);
+                MonthlyBudget.Calculate();
+                break;
+            } else {
+                System.out.println("Invalid input, try again.");
+            }
+        }
+            Centre.CheapestStore();
+            Centre.NearestStore();
+            Centre.CheapestProduct();
+        }
     }
-}
+
